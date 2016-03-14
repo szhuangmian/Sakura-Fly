@@ -1,6 +1,7 @@
 Sakura Fly
 ===============
 
+<img src="https://travis-ci.org/travis-ci/travis-web.svg?branch=master">
 ## Introduction
 
 <img src="https://cloud.githubusercontent.com/assets/6619146/13731456/53f81f98-e93f-11e5-9900-03065a18693b.png" width="120">
