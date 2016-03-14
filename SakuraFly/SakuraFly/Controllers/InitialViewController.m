@@ -11,14 +11,15 @@
 #import "GameKitHeaders.h"
 
 @import GameKit;
-@interface InitialViewController (){
-    ADInterstitialAd *interstitial;
-    ADBannerView *_adBanner;
-    BOOL requestingAd;
-}
 
+@interface InitialViewController ()
+
+@property (strong, nonatomic) ADInterstitialAd *interstitial;
+@property (strong, nonatomic) ADBannerView *adBanner;
+@property (assign, nonatomic) BOOL requestingAd;
 @property (strong, nonatomic) PrimaryScene *mainScene;
 @property (assign, nonatomic) BOOL gameCenterEnabled;
+
 @end
 
 @implementation InitialViewController
@@ -27,18 +28,19 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        
     }
     return self;
 }
+
 -(BOOL)prefersStatusBarHidden{
     return YES;
 }
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    self.mainScene = [[PrimaryScene alloc] initWithSize:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height)];
+    
+    _mainScene = [[PrimaryScene alloc] initWithSize:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height)];
     _mainScene.scaleMode = SKSceneScaleModeAspectFit;
     [_mainScene runAction:[SKAction repeatActionForever:[SKAction playSoundFileNamed:@"backGround.mp3" waitForCompletion:YES]]];
     SKView *view = (SKView *)self.view;
@@ -64,29 +66,29 @@
         if (viewController != nil) {
             [self presentViewController:viewController animated:YES completion:nil];
         }else{
-        if ([GKLocalPlayer localPlayer].authenticated) {
-            _gameCenterEnabled = YES;        }
-        
-        else{
-            _gameCenterEnabled = NO;
-        }
+            if ([GKLocalPlayer localPlayer].authenticated) {
+                _gameCenterEnabled = YES;        }
+            
+            else{
+                _gameCenterEnabled = NO;
+            }
         }
     };
 }
 
 #pragma mark -iad
 -(void)showFullScreenAd {
-        interstitial = [[ADInterstitialAd alloc] init];
-        interstitial.delegate = self;
-        [UIViewController prepareInterstitialAds];
-        self.interstitialPresentationPolicy = ADInterstitialPresentationPolicyManual;
-        [self requestInterstitialAdPresentation];
-        NSLog(@"interstitialAdREQUEST");
+    _interstitial = [[ADInterstitialAd alloc] init];
+    _interstitial.delegate = self;
+    [UIViewController prepareInterstitialAds];
+    self.interstitialPresentationPolicy = ADInterstitialPresentationPolicyManual;
+    [self requestInterstitialAdPresentation];
+    NSLog(@"interstitialAdREQUEST");
 }
 
 -(void)interstitialAd:(ADInterstitialAd *)interstitialAd didFailWithError:(NSError *)error {
-    interstitial = nil;
-    requestingAd = NO;
+    _interstitial = nil;
+    _requestingAd = NO;
     NSLog(@"interstitialAd didFailWithERROR");
     NSLog(@"%@", error);
 }

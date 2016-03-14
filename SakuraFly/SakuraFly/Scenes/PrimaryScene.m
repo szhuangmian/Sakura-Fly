@@ -95,7 +95,7 @@ static const uint32_t flowerCategory = 0x1 << 4;
 
 - (void)startGame
 {
-    self.isGameStart = YES;
+    _isGameStart = YES;
     _hero.physicsBody.affectedByGravity = YES;
     [_hero removeActionForKey:ACTIONKEY_FLY];
     [_tapToStart removeFromParent];
@@ -110,8 +110,8 @@ static const uint32_t flowerCategory = 0x1 << 4;
 
 - (void)gameOver
 {
-    self.isGameOver = YES;
-    self.isGameStart=NO;
+    _isGameOver = YES;
+    _isGameStart=NO;
     [_hero removeActionForKey:ACTIONKEY_MOVEHEAD];
     [self removeActionForKey:ACTIONKEY_ADDWALL];
     [self enumerateChildNodesWithName:NODENAME_WALL usingBlock:^(SKNode *node, BOOL *stop) {
@@ -132,7 +132,7 @@ static const uint32_t flowerCategory = 0x1 << 4;
 - (void)restart
 {
     [self addInstruction];
-    self.labelNode.text = @"";
+    _labelNode.text = @"";
     [self enumerateChildNodesWithName:NODENAME_HOLE usingBlock:^(SKNode *node, BOOL *stop) {
         [node removeFromParent];
     }];
@@ -140,14 +140,14 @@ static const uint32_t flowerCategory = 0x1 << 4;
         [node removeFromParent];
     }];
     [_hero removeFromParent];
-    self.hero = nil;
+    _hero = nil;
     [self addHeroNode];
     [self runAction:[SKAction repeatActionForever:[SKAction sequence:@[
                                                                        [SKAction performSelector:@selector(addFlower) onTarget:self],
                                                                        [SKAction waitForDuration:0.3f],
                                                                        ]]] withKey:ACTIONKEY_ADDFLOWER];
-    self.isGameStart = NO;
-    self.isGameOver = NO;
+    _isGameStart = NO;
+    _isGameOver = NO;
 }
 
 - (void)playSoundWithName:(NSString *)fileName
@@ -159,7 +159,7 @@ static const uint32_t flowerCategory = 0x1 << 4;
 #pragma mark - add method
 - (void)addResultLabelNode
 {
-    self.labelNode = [SKLabelNode labelNodeWithFontNamed:@"AmericanTypewriter-Bold"];
+    _labelNode = [SKLabelNode labelNodeWithFontNamed:@"AmericanTypewriter-Bold"];
     _labelNode.fontSize = 30.0f;
     _labelNode.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeLeft;
     _labelNode.verticalAlignmentMode = SKLabelVerticalAlignmentModeTop;
@@ -180,14 +180,14 @@ static const uint32_t flowerCategory = 0x1 << 4;
 }
 
 - (void)addInstruction{
-    self.hitSakuraToScore = [SKLabelNode labelNodeWithFontNamed:@"AmericanTypewriter"];
+    _hitSakuraToScore = [SKLabelNode labelNodeWithFontNamed:@"AmericanTypewriter"];
     _hitSakuraToScore.fontSize = 20.0f;
     _hitSakuraToScore.position = CGPointMake(self.frame.size.width / 2, CGRectGetMidY(self.frame)-60);
     _hitSakuraToScore.fontColor = COLOR_LABEL;
     _hitSakuraToScore.zPosition=100;
     _hitSakuraToScore.text=@"Hit Sakura to Score";
     [self addChild:_hitSakuraToScore];
-    self.tapToStart = [SKLabelNode labelNodeWithFontNamed:@"AmericanTypewriter-Bold"];
+    _tapToStart = [SKLabelNode labelNodeWithFontNamed:@"AmericanTypewriter-Bold"];
     _tapToStart.fontSize = 20.0f;
     _tapToStart.position = CGPointMake(self.frame.size.width / 2, CGRectGetMidY(self.frame)-100);
     _tapToStart.fontColor = COLOR_LABEL;
@@ -197,7 +197,7 @@ static const uint32_t flowerCategory = 0x1 << 4;
 }
 - (void)addHeroNode
 {
-    self.hero=[SKSpriteNode spriteNodeWithImageNamed:@"player"];
+    _hero=[SKSpriteNode spriteNodeWithImageNamed:@"player"];
     SKTexture* texture=[SKTexture textureWithImageNamed:@"player"];
     _hero.physicsBody=[SKPhysicsBody bodyWithTexture:texture size:_hero.size];
     _hero.anchorPoint = CGPointMake(0.5, 0.5);
@@ -217,7 +217,7 @@ static const uint32_t flowerCategory = 0x1 << 4;
 }
 
 - (void)addCeiling{
-    self.ceiling = [SKSpriteNode spriteNodeWithColor:COLOR_WALL size:CGSizeMake(self.frame.size.width, 1)];
+    _ceiling = [SKSpriteNode spriteNodeWithColor:COLOR_WALL size:CGSizeMake(self.frame.size.width, 1)];
     _ceiling.anchorPoint = CGPointMake(0, 0);
     _ceiling.position = CGPointMake(0, self.view.frame.size.height);
     _ceiling.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:_ceiling.size center:CGPointMake(_ground.size.width / 2.0f, _ground.size.height / 2.0f)];
@@ -228,7 +228,7 @@ static const uint32_t flowerCategory = 0x1 << 4;
 
 - (void)addGroundNode
 {
-    self.ground = [SKSpriteNode spriteNodeWithColor:COLOR_WALL size:CGSizeMake(self.frame.size.width, GROUND_HEIGHT)];
+    _ground = [SKSpriteNode spriteNodeWithColor:COLOR_WALL size:CGSizeMake(self.frame.size.width, GROUND_HEIGHT)];
     _ground.anchorPoint = CGPointMake(0, 0);
     _ground.position = CGPointMake(0, 0);
     _ground.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:_ground.size center:CGPointMake(_ground.size.width / 2.0f, _ground.size.height / 2.0f)];
@@ -303,7 +303,7 @@ static const uint32_t flowerCategory = 0x1 << 4;
 
 - (void)update:(NSTimeInterval)currentTime
 {
-    if(self.hero&&!_isGameOver){
+    if(_hero&&!_isGameOver){
         if ( self.hero.position.x<10) {
             [self gameOver];
         }else if(self.hero.position.x>self.frame.size.width){
