@@ -67,9 +67,11 @@ static const uint32_t flowerCategory = 0x1 << 4;
     [self showFullScreenAd];
 #endif
 }
+
 - (void)restartView:(RestartLabel *)restartView didPressLeaderboardButton:(SKSpriteNode *)restartButton{
     [self showLeaderboard];
 }
+
 -(void)showFullScreenAd{
     if (_isGameStart) {
         return;
@@ -78,6 +80,7 @@ static const uint32_t flowerCategory = 0x1 << 4;
     [(MainViewController*)self.view.window.rootViewController showFullScreenAd];
 #endif
 }
+
 -(void)showLeaderboard{
     GKGameCenterViewController *gcViewController = [[GKGameCenterViewController alloc] init];
     gcViewController.gameCenterDelegate = self;
@@ -86,6 +89,7 @@ static const uint32_t flowerCategory = 0x1 << 4;
     [self.view.window.rootViewController presentViewController:gcViewController animated:YES completion:nil];
     
 }
+
 -(void)gameCenterViewControllerDidFinish:(GKGameCenterViewController *)gameCenterViewController
 {
     [gameCenterViewController dismissViewControllerAnimated:YES completion:nil];
@@ -156,6 +160,7 @@ static const uint32_t flowerCategory = 0x1 << 4;
         [self runAction:[SKAction playSoundFileNamed:fileName waitForCompletion:YES]];
     });
 }
+
 #pragma mark - add method
 - (void)addResultLabelNode
 {
@@ -195,6 +200,7 @@ static const uint32_t flowerCategory = 0x1 << 4;
     _tapToStart.text=@"Tap to Fly";
     [self addChild:_tapToStart];
 }
+
 - (void)addHeroNode
 {
     _hero=[SKSpriteNode spriteNodeWithImageNamed:@"player"];
@@ -336,6 +342,7 @@ static const uint32_t flowerCategory = 0x1 << 4;
 
 
 #pragma mark - TouchEvent
+
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     if (_isGameOver) {
@@ -349,6 +356,7 @@ static const uint32_t flowerCategory = 0x1 << 4;
 }
 
 #pragma mark - SKPhysicsContactDelegate
+
 - (void)didBeginContact:(SKPhysicsContact *)contact
 {
     if (_isGameOver) {
@@ -382,6 +390,7 @@ static const uint32_t flowerCategory = 0x1 << 4;
         }
     }
 }
+
 - (void) didEndContact:(SKPhysicsContact *)contact{
     if (_isGameOver) {
         return;
@@ -398,6 +407,7 @@ static const uint32_t flowerCategory = 0x1 << 4;
     if ((firstBody.categoryBitMask & heroCategory) && (secondBody.categoryBitMask & holeCategory)) {
     }
 }
+
 @end
 
 

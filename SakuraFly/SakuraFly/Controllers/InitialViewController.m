@@ -22,15 +22,8 @@
 
 @end
 
-@implementation InitialViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-    }
-    return self;
-}
+@implementation InitialViewController
 
 -(BOOL)prefersStatusBarHidden{
     return YES;
@@ -54,10 +47,7 @@
     [view presentScene:_mainScene];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-}
+#pragma mark - game center
 
 -(void)authenticateLocalPlayer{
     GKLocalPlayer *localPlayer = [GKLocalPlayer localPlayer];
@@ -76,7 +66,8 @@
     };
 }
 
-#pragma mark -iad
+#pragma mark -iAd
+
 -(void)showFullScreenAd {
     _interstitial = [[ADInterstitialAd alloc] init];
     _interstitial.delegate = self;
