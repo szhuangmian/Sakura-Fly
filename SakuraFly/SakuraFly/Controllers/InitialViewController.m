@@ -16,9 +16,9 @@
 
 @property (strong, nonatomic) ADInterstitialAd *interstitial;
 @property (strong, nonatomic) ADBannerView *adBanner;
-@property (assign, nonatomic) BOOL requestingAd;
 @property (strong, nonatomic) PrimaryScene *mainScene;
 @property (assign, nonatomic) BOOL gameCenterEnabled;
+@property (assign, nonatomic) BOOL requestingAd;
 
 @end
 
@@ -29,22 +29,33 @@
     return YES;
 }
 
+- (void)loadView
+{
+    CGRect applicationFrame = [[UIScreen mainScreen] applicationFrame];
+    SKView *skView = [[SKView alloc] initWithFrame: applicationFrame];
+    self.view = skView;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    _mainScene = [[PrimaryScene alloc] initWithSize:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height)];
-    _mainScene.scaleMode = SKSceneScaleModeAspectFit;
-    [_mainScene runAction:[SKAction repeatActionForever:[SKAction playSoundFileNamed:@"backGround.mp3" waitForCompletion:YES]]];
-    SKView *view = (SKView *)self.view;
+    SKView * skView = (SKView *)self.view;
 #ifdef DEBUG
-    view.showsDrawCount = YES;
-    view.showsFPS = YES;
-    view.showsNodeCount = YES;
+    skView.showsDrawCount = YES;
+    skView.showsFPS = YES;
+    skView.showsNodeCount = YES;
 #else
     [self authenticateLocalPlayer];
 #endif
-    [view presentScene:_mainScene];
+}
+
+- (void)viewDidLayoutSubviews
+{
+    SKView * skView = (SKView *)self.view;
+    _mainScene = [[PrimaryScene alloc] initWithSize:CGSizeMake(skView.bounds.size.width, skView.bounds.size.height)];
+    _mainScene.scaleMode = SKSceneScaleModeAspectFit;
+    [_mainScene runAction:[SKAction repeatActionForever:[SKAction playSoundFileNamed:@"backGround.mp3" waitForCompletion:YES]]];
+    [skView presentScene:_mainScene];
 }
 
 #pragma mark - game center
