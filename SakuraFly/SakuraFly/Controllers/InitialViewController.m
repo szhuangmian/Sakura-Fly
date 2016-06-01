@@ -34,12 +34,6 @@
     CGRect applicationFrame = [[UIScreen mainScreen] applicationFrame];
     SKView *skView = [[SKView alloc] initWithFrame: applicationFrame];
     self.view = skView;
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    SKView * skView = (SKView *)self.view;
 #ifdef DEBUG
     skView.showsDrawCount = YES;
     skView.showsFPS = YES;
@@ -47,11 +41,6 @@
 #else
     [self authenticateLocalPlayer];
 #endif
-}
-
-- (void)viewDidLayoutSubviews
-{
-    SKView * skView = (SKView *)self.view;
     _mainScene = [[PrimaryScene alloc] initWithSize:CGSizeMake(skView.bounds.size.width, skView.bounds.size.height)];
     _mainScene.scaleMode = SKSceneScaleModeAspectFit;
     [_mainScene runAction:[SKAction repeatActionForever:[SKAction playSoundFileNamed:@"backGround.mp3" waitForCompletion:YES]]];
