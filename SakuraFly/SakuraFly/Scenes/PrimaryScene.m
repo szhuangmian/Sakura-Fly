@@ -63,22 +63,10 @@ static const uint32_t flowerCategory = 0x1 << 4;
 {
     [restartView dismiss];
     [self restart];
-#ifndef DEBUG
-    [self showFullScreenAd];
-#endif
 }
 
 - (void)restartView:(RestartLabel *)restartView didPressLeaderboardButton:(SKSpriteNode *)restartButton{
     [self showLeaderboard];
-}
-
--(void)showFullScreenAd{
-    if (_isGameStart) {
-        return;
-    }
-#ifndef DEBUG
-    [(MainViewController*)self.view.window.rootViewController showFullScreenAd];
-#endif
 }
 
 -(void)showLeaderboard{
