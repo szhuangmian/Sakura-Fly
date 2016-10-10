@@ -14,7 +14,6 @@
 
 - (void)restartView:(RestartLabel *)restartView didPressRestartButton:(SKSpriteNode *)restartButton;
 - (void)restartView:(RestartLabel *)restartView didPressLeaderboardButton:(SKSpriteNode *)restartButton;
-- (void)showFullScreenAd;
 
 @end
 
