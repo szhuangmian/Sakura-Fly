@@ -404,8 +404,6 @@ static const uint32_t flowerCategory = 0x1 << 4;
         secondBody = contact.bodyA;
     }
     return;
-    if ((firstBody.categoryBitMask & heroCategory) && (secondBody.categoryBitMask & holeCategory)) {
-    }
 }
 
 @end
